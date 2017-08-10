@@ -1,0 +1,155 @@
+
+<html>
+<script language="javascript">
+	function getalert()
+	{
+		name=document.f1.name.value;
+		email=document.f1.email.value;
+		password=document.f1.password.value;
+		conpassword=document.f1.conpassword.value;
+		gen=document.f1.gen.value;
+		dob=document.f1.dob.value;
+		if(name==""){
+			alert("enter name");
+			return false;
+		}
+		else if(email==""){
+			alert("enter email");
+			return false;
+		}
+		else if(password==""){
+			alert("enter password");
+			return false;
+		}
+		else if((password.length)<6)
+		{
+			alert("password too small");
+			return false;
+		}
+		
+		else if(conpassword==""){
+			alert("retype password");
+			return false;
+		}
+		else if(gen==""){
+			alert("enter gender");
+			return false;
+		}
+		else if(dob==""){
+			alert("enter date of birth");
+			return false;
+		}
+		else if(password!=conpassword){
+			alert("password and confirm password do not match");
+			return false;
+		}
+		else{
+		}	
+		return true;
+	}
+</script>
+<style>
+	#container{
+		margin-left: 10%;
+		margin-right: 10%;
+	}
+	#topright{
+		float: right;
+		width: 10%;
+	}
+
+	
+</style>
+<head>
+	<title>Online Bus Management System-Sign Up</title>
+</head>
+<body>
+
+<div id="container">
+	<div id="top">
+		<div id="topright">
+			<p style="color:gray;">Hi Guest</p>
+		</div>
+		<div id="topleft">
+			<p style="font-family: magneto;font-size: 30px;color: red;margin-top:2%;">Red Bus</p>
+		</div>
+		
+	</div>
+	<hr>
+	<h4 style="text-decoration:bold;font-family:Calibri;margin-bottom:0px;">New User?Register here</h4>
+	<p style="color:gray;font-size:15px;margin-top:0px;font:family:Calibri;">Tell us a few things about yourself and we will help<br> you reserve your seat and
+	enjoy your ride in the city.</p>
+		<form method="post" action="http://localhost/project/pagereg.php" name="f1" onsubmit="return getalert()">
+			<table>
+				<tr>
+					<td>
+						Your Full Name
+					</td>
+					<td>
+						<input type="text" name="name">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Your current Email ID
+					</td>
+					<td>
+						<input type="email" name="email">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Password
+					</td>
+					<td>
+						<input type="password" name="password"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Retype Password
+					</td>
+					<td>
+						<input type="password" name="conpassword"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Gender
+					</td>
+					<td>
+						Male:<input type="radio" name="gen" value="male" />
+					
+						Female:<input type="radio" name="gen" value="female" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Date of birth
+					</td>
+					<td>
+						<input type="date" name="dob">
+					</td>
+				</tr>
+				<tr><td> </td></tr>
+				<tr><td> </td></tr>
+				<tr><td> </td></tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+						<input type="submit" value="Sign Up" name="signup">
+					</td>
+				</tr>
+			</table>
+		</form>
+		<hr style="margin-top:4%;">
+		<center>
+		<div>
+			<p>RedBus.com</p>
+		</div>
+		</center>
+</div>
+
+</body>
+</html>
