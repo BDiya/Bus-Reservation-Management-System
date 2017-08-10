@@ -2,9 +2,16 @@
 session_start();
 $con=mysql_connect("localhost","root","");
 $db=mysql_select_db("proj");
+$a=$_POST['dst'];
+$z=$_SESSION['busid'];
+$x=$_SESSION['usrlog'];
+$y=$_SESSION['p'];
+
+$_SESSION['usrlog']=$x;
+$_SESSION['p']=$y;
+$_SESSION['dst']=$a;
+$_SESSION['busid']=$z;
 ?>
-
-
 
 
 <style>
@@ -32,19 +39,17 @@ section{
 		height: 50%;
 		background-color: red;
 box-shadow: 5px 5px 5px #888888;
-	} 
+	}  
 #pl{
 	position:absolute;
 left:450px;
-top:200px;
+top:185px;
 	
-		width: 30%;
+		width: 33%;
 		height:29%;
-		border-width:1px;
-border-style:solid;
-border-color:grey;
-padding-left:40px;
-padding-top:40px;
+
+padding-left:20px;
+padding-top:20px;
 }
 
 
@@ -82,12 +87,13 @@ color:red;
 }
 
 #lt{
-	
+
+background-color:#ffcccc;	
 		border: 1px solid black;
 		float: right;
 		width: 17%;
 		height: 50%;
-		background-color:#ffcccc;
+		
 }
 
 a	{
@@ -101,7 +107,7 @@ a:hover	{
 	color:grey;
 	}
 
- td{   background-color: #ff6666;
+ #t{   background-color: #ff6666;
  	padding-top: 12px;
  	padding-bottom: 12px;
     padding-left:30px;
@@ -111,14 +117,14 @@ a:hover	{
 
 
 }
-td:hover{
+#t:hover{
 background-color: #ffcccc;
 border-color: black;
 	    border-spacing: 0px;
 	    border-width: 2px;
 }
 
-table{
+#display{
 	font-family: "Baskerville old face";
 	border-collapse: collapse;
 	width: 100%;
@@ -127,7 +133,6 @@ table{
 body{
 background:radial-gradient(#ffcccc,white);
 }
-
 </style>
 
 
@@ -135,7 +140,7 @@ background:radial-gradient(#ffcccc,white);
 
 
 
-<form name="f1" method='post' action='changePswNext.php'> 
+<form name="f1">
 <title>Online Bus Management System</title>
 
 
@@ -157,78 +162,101 @@ background:radial-gradient(#ffcccc,white);
 <hr>
 	<marquee style="font-family:calibri;color:red;font-size:15px">Welcome to the Red Bus Service.Wish you a very happy journey.</marquee>
 <hr>
-
 <?php
-$a=$_SESSION['usrlog'];
-$b=$_SESSION['p'];
-
-$_SESSION['usrlog']=$a;
-$_SESSION['p']=$b;
-
-if($a==""){
-}
+if($a=="")
+{}
 else{
-
-
 echo "<section>";
 echo "<table id='display'>";
-echo "<tr> <td> <a href='allusers.php'> ALL Users</a></td></tr>";
-echo "<tr> <td> <a href='admin.php'> Passenger Details</a></td></tr>";
-echo "<tr> <td> <a href='admin2.php'> Update Routes</a></td></tr>";
-echo "<tr> <td> <a href='admin3.php'> Update Bus Details</a></td></tr>";
-echo "<tr> <td> <a href='view.php'> Feedback</a></td></tr>";
-echo "<tr> <td> <a href='logout.php'> Logout</a></td></tr>";
+echo "<tr> <td id='t'> <a href='allusers.php'> ALL Users</a></td></tr>";
+echo "<tr> <td id='t'> <a href='admin.php'> Passenger Details</a></td></tr>";
+echo "<tr> <td id='t'> <a href='admin2.php'> Update Routes</a></td></tr>";
+echo "<tr> <td id='t'> <a href='admin3.php'> Update Bus Details</a></td></tr>";
+echo "<tr> <td id='t'> <a href='view.php'> Feedback </a></td></tr>";;
+echo "<tr> <td id='t'> <a href='logout.php'> Logout</a></td></tr>";
 echo "</table>";
 echo "</section>";
 
-
-echo '<div id="pl">';
-$usr=$_POST['usr'];
-$psw=$_POST['ps2'];
-$_SESSION['usr']=$usr;
-$_SESSION['psw']=$psw;
+	echo '<div id="pl">';
 
 
-$sql="update admin set pass='$psw' where email='$usr'";
+
+
+$sql="update routes set destination='$a' where busid='$z'";
+$res=mysql_query($sql);
+$sql="select busid, source, destination,departuretime from routes where busid=$z ";
 $res=mysql_query($sql);
 
-//view
-$sql="select * from admin where email='$usr'";
-$res=mysql_query($sql);
+if($res)
+{       echo "<b><font color='red'; size='5px';>Changes Done Succesfully!</font></b>";
+	echo "<h3><font color='red';>Route Details</font></h3>";
+	echo "<table width='400' border=1>";
 	
-		$flag=0; $c=""; $d=""; $e="";
+	echo "<tr>";
+	echo "<td>Bus-id</td>";
+	echo "<td>Source</td>";
+	echo "<td>Destination</td>";
+	echo "<td>Departure Time</td>";
+	echo "</tr>";
 
-		while($row=mysql_fetch_array($res))
-		{	
-		 $c=$row['pass'];
-		 $d=$row['naam'];
-	
-		$flag=1;
-		} //end of loop
-
-	if($flag==1)
-	{
-	echo "<font size='5px'; color='red';>Password modified</font>";
-	echo "<h3> Full name: $d </h3>";
-	echo " <h3>New password: <u>$c</u></h3>";
-	echo "<a href='AdminHome.php'>AdminHome</a>";
+	while($row=mysql_fetch_array($res))
+	{	
+		echo "<tr>";
+		echo "<td>".$row['busid']."</td> ";
+		echo "<td> ".$row['source']."</td> ";
+		echo "<td> ".$row['destination']."</td>";
+		echo "<td> ".$row['departuretime']."</td>";		
+		echo "</tr>";
 	}
-	else
-	echo "<br><br>error ";
 
-echo '</div><div id="ft">';
+	echo "</table>";
+}
 
-	
-echo '<hr>
+
+else
+echo "<br> NOT Found ";
+
+
+
+
+echo "<br><br>";
+echo "<a href='admin2.php'> Update Routes </a>";
+
+echo '</div>
+
+<div id="ft">
+<hr>
 <center><font color="grey";>RedBus.com</font></center>
 </div>
 <div id="lt">
 <br><br><br><br><br><br><br>
-<marquee behavior="scroll" direction="left"><img src="Redbus.png" width="160" height="70 " alt="Natural" /></marquee>	
-
+<marquee behavior="scroll" direction="left"><img src="Redbus.png" width="160" height="70 " alt="Natural" /></marquee>
 </div>';
 }
 ?>
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -30,16 +30,16 @@ section{
 		float: left;
 		width: 17%;
 		height: 50%;
-		background-color: red;
+		background-color: #ffcccc;
 box-shadow: 5px 5px 5px #888888;
-	} 
+	}  
 #pl{
 	position:absolute;
 left:450px;
-top:200px;
+top:185px;
 	
-		width: 30%;
-		height:29%;
+		width: 34%;
+		height:43%;
 		border-width:1px;
 border-style:solid;
 border-color:grey;
@@ -55,8 +55,8 @@ h2{ padding:20px 20px;
 left:0px;
 top:550px;
 	
-width: 100%;
-height:29%;
+		width: 100%;
+		height:29%;
 }
 
 input[type=submit]{
@@ -82,12 +82,13 @@ color:red;
 }
 
 #lt{
-	
+
+background-color:#ffcccc;	
 		border: 1px solid black;
 		float: right;
 		width: 17%;
 		height: 50%;
-		background-color:#ffcccc;
+		
 }
 
 a	{
@@ -127,21 +128,13 @@ table{
 body{
 background:radial-gradient(#ffcccc,white);
 }
-
 </style>
 
-
-
-
-
-
-<form name="f1" method='post' action='changePswNext.php'> 
 <title>Online Bus Management System</title>
-
 
 <div id="hd">
 		<center>
-		<h1 style="margin:1%;">Red Bus</h1>
+		<h1 style="margin:1%;">RedBus</h1>
 		</center>
 </div>
 
@@ -158,77 +151,66 @@ background:radial-gradient(#ffcccc,white);
 	<marquee style="font-family:calibri;color:red;font-size:15px">Welcome to the Red Bus Service.Wish you a very happy journey.</marquee>
 <hr>
 
+<section>
+			<br><br><br><br><br><br><br>
+<marquee behavior="scroll" direction="left"><img src="Redbus.png" width="160" height="70 " alt="Natural" /></marquee>
+</section>
+
+
+
+
+<div id="pl">
+
 <?php
-$a=$_SESSION['usrlog'];
-$b=$_SESSION['p'];
 
-$_SESSION['usrlog']=$a;
-$_SESSION['p']=$b;
+$b=$_POST['email'];
+$c=$_POST['password'];
+$_SESSION['email']=$b;
 
-if($a==""){
-}
-else{
-
-
-echo "<section>";
-echo "<table id='display'>";
-echo "<tr> <td> <a href='allusers.php'> ALL Users</a></td></tr>";
-echo "<tr> <td> <a href='admin.php'> Passenger Details</a></td></tr>";
-echo "<tr> <td> <a href='admin2.php'> Update Routes</a></td></tr>";
-echo "<tr> <td> <a href='admin3.php'> Update Bus Details</a></td></tr>";
-echo "<tr> <td> <a href='view.php'> Feedback</a></td></tr>";
-echo "<tr> <td> <a href='logout.php'> Logout</a></td></tr>";
-echo "</table>";
-echo "</section>";
-
-
-echo '<div id="pl">';
-$usr=$_POST['usr'];
-$psw=$_POST['ps2'];
-$_SESSION['usr']=$usr;
-$_SESSION['psw']=$psw;
-
-
-$sql="update admin set pass='$psw' where email='$usr'";
+$sql="select * from admin where email='$b' and pass='$c'";
 $res=mysql_query($sql);
+     
+$flag=0; $d=""; $e="";
 
-//view
-$sql="select * from admin where email='$usr'";
-$res=mysql_query($sql);
-	
-		$flag=0; $c=""; $d=""; $e="";
+while($row=mysql_fetch_array($res))
+{
+$d=$row['email'];		
+$e=$row['naam'];
+$flag=1;
+} 
 
-		while($row=mysql_fetch_array($res))
-		{	
-		 $c=$row['pass'];
-		 $d=$row['naam'];
-	
-		$flag=1;
-		} //end of loop
 
-	if($flag==1)
-	{
-	echo "<font size='5px'; color='red';>Password modified</font>";
-	echo "<h3> Full name: $d </h3>";
-	echo " <h3>New password: <u>$c</u></h3>";
-	echo "<a href='AdminHome.php'>AdminHome</a>";
-	}
-	else
-	echo "<br><br>error ";
+if($flag==1)
+		{
+		echo "<b><font color='red'; size='5px';>Successful Login</font></b><br>";
+		echo "<br><h3> Email : $d</h3> ";
+		echo "<h3> FullName : $e </h3><br> ";
+		$_SESSION['usrlog']=$d;
+		$_SESSION['p']=$c;//added
+		echo "<br><font size='5px'; ><a href='AdminHome.php'>Proceed to access Admin Home</a></font>";			
+		}
+		else{
+		echo "<br> Wrong emailid/Password <br>";
+		echo "<a href='adlogin.php'> Try again</a>";
+		}	
 
-echo '</div><div id="ft">';
 
-	
-echo '<hr>
+
+?>
+
+
+</div>
+<div id="ft">
+
+
+<hr>
 <center><font color="grey";>RedBus.com</font></center>
 </div>
-<div id="lt">
-<br><br><br><br><br><br><br>
-<marquee behavior="scroll" direction="left"><img src="Redbus.png" width="160" height="70 " alt="Natural" /></marquee>	
 
-</div>';
-}
-?>
 </form>
+
+
+
+
 
 

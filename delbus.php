@@ -1,11 +1,10 @@
 <?php
 session_start();
-$con=mysql_connect("localhost","root","");
-$db=mysql_select_db("proj");
+$x=$_SESSION['usrlog'];
+$y=$_SESSION['p'];
+$_SESSION['usrlog']=$x;
+$_SESSION['p']=$y;
 ?>
-
-
-
 
 <style>
 #hd{
@@ -32,14 +31,14 @@ section{
 		height: 50%;
 		background-color: red;
 box-shadow: 5px 5px 5px #888888;
-	} 
+	}  
 #pl{
 	position:absolute;
 left:450px;
-top:200px;
+top:185px;
 	
 		width: 30%;
-		height:29%;
+		height:39%;
 		border-width:1px;
 border-style:solid;
 border-color:grey;
@@ -50,7 +49,6 @@ padding-top:40px;
 
 h2{ padding:20px 20px;
 }
-
 #ft{position:absolute;
 left:0px;
 top:550px;
@@ -61,7 +59,7 @@ height:29%;
 
 input[type=submit]{
 text-decoration: bold;
-		width: 20%;
+		width: 30%;
 		height:17%;
 		color: white;
 		font-family: "Baskerville old face";
@@ -82,12 +80,13 @@ color:red;
 }
 
 #lt{
-	
+
+background-color:#ffcccc;	
 		border: 1px solid black;
 		float: right;
 		width: 17%;
 		height: 50%;
-		background-color:#ffcccc;
+		
 }
 
 a	{
@@ -127,7 +126,6 @@ table{
 body{
 background:radial-gradient(#ffcccc,white);
 }
-
 </style>
 
 
@@ -135,7 +133,7 @@ background:radial-gradient(#ffcccc,white);
 
 
 
-<form name="f1" method='post' action='changePswNext.php'> 
+<form name="f1" action="try44.php" method="post">
 <title>Online Bus Management System</title>
 
 
@@ -159,17 +157,9 @@ background:radial-gradient(#ffcccc,white);
 <hr>
 
 <?php
-$a=$_SESSION['usrlog'];
-$b=$_SESSION['p'];
-
-$_SESSION['usrlog']=$a;
-$_SESSION['p']=$b;
-
-if($a==""){
-}
+if($x=="")
+{}
 else{
-
-
 echo "<section>";
 echo "<table id='display'>";
 echo "<tr> <td> <a href='allusers.php'> ALL Users</a></td></tr>";
@@ -181,54 +171,20 @@ echo "<tr> <td> <a href='logout.php'> Logout</a></td></tr>";
 echo "</table>";
 echo "</section>";
 
+	echo '<div id="pl">';
+echo "<b><font color='red'; size='5px';>Bus Details</font></b>";
+echo '<h3>Bus Id: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type="text" name="busid" placeholder="   Enter bus-id" value=""></h3>
 
-echo '<div id="pl">';
-$usr=$_POST['usr'];
-$psw=$_POST['ps2'];
-$_SESSION['usr']=$usr;
-$_SESSION['psw']=$psw;
-
-
-$sql="update admin set pass='$psw' where email='$usr'";
-$res=mysql_query($sql);
-
-//view
-$sql="select * from admin where email='$usr'";
-$res=mysql_query($sql);
-	
-		$flag=0; $c=""; $d=""; $e="";
-
-		while($row=mysql_fetch_array($res))
-		{	
-		 $c=$row['pass'];
-		 $d=$row['naam'];
-	
-		$flag=1;
-		} //end of loop
-
-	if($flag==1)
-	{
-	echo "<font size='5px'; color='red';>Password modified</font>";
-	echo "<h3> Full name: $d </h3>";
-	echo " <h3>New password: <u>$c</u></h3>";
-	echo "<a href='AdminHome.php'>AdminHome</a>";
-	}
-	else
-	echo "<br><br>error ";
-
-echo '</div><div id="ft">';
-
-	
-echo '<hr>
+<h3>Click to: &nbsp;&nbsp; &nbsp;&nbsp; <input type="submit" name="sub" value="Delete Bus"></h3>
+</div>
+<div id="ft">
+<hr>
 <center><font color="grey";>RedBus.com</font></center>
 </div>
 <div id="lt">
 <br><br><br><br><br><br><br>
 <marquee behavior="scroll" direction="left"><img src="Redbus.png" width="160" height="70 " alt="Natural" /></marquee>	
-
 </div>';
-}
-?>
+}?>
 </form>
-
 

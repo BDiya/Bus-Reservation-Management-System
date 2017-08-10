@@ -32,7 +32,7 @@ section{
 		height: 50%;
 		background-color: red;
 box-shadow: 5px 5px 5px #888888;
-	} 
+	}  
 #pl{
 	position:absolute;
 left:450px;
@@ -58,7 +58,6 @@ top:550px;
 width: 100%;
 height:29%;
 }
-
 input[type=submit]{
 text-decoration: bold;
 		width: 20%;
@@ -82,12 +81,13 @@ color:red;
 }
 
 #lt{
-	
+
+background-color:#ffcccc;	
 		border: 1px solid black;
 		float: right;
 		width: 17%;
 		height: 50%;
-		background-color:#ffcccc;
+	
 }
 
 a	{
@@ -127,7 +127,6 @@ table{
 body{
 background:radial-gradient(#ffcccc,white);
 }
-
 </style>
 
 
@@ -160,11 +159,6 @@ background:radial-gradient(#ffcccc,white);
 
 <?php
 $a=$_SESSION['usrlog'];
-$b=$_SESSION['p'];
-
-$_SESSION['usrlog']=$a;
-$_SESSION['p']=$b;
-
 if($a==""){
 }
 else{
@@ -183,38 +177,42 @@ echo "</section>";
 
 
 echo '<div id="pl">';
-$usr=$_POST['usr'];
-$psw=$_POST['ps2'];
-$_SESSION['usr']=$usr;
-$_SESSION['psw']=$psw;
+
+$a=$_SESSION['usrlog'];
+$b=$_SESSION['p'];
+
+$_SESSION['usrlog']=$a;
+$_SESSION['p']=$b;
+
+$sql="select * from admin where email='$a'";
 
 
-$sql="update admin set pass='$psw' where email='$usr'";
-$res=mysql_query($sql);
 
-//view
-$sql="select * from admin where email='$usr'";
 $res=mysql_query($sql);
 	
 		$flag=0; $c=""; $d=""; $e="";
 
 		while($row=mysql_fetch_array($res))
 		{	
-		 $c=$row['pass'];
-		 $d=$row['naam'];
-	
-		$flag=1;
+		 $d=$row['pass'];
+				$flag=1; // true
 		} //end of loop
+
 
 	if($flag==1)
 	{
-	echo "<font size='5px'; color='red';>Password modified</font>";
-	echo "<h3> Full name: $d </h3>";
-	echo " <h3>New password: <u>$c</u></h3>";
-	echo "<a href='AdminHome.php'>AdminHome</a>";
+	echo "<br>User &nbsp; ";
+	echo "<input type='text' name='usr' value='$a'>";
+	echo "<br><br>Old Password &nbsp; ";
+	echo "<input type='text' name='ps1' value='$d'>";
+
+	echo "<br><br>New Password &nbsp; ";
+	echo "<input type='text' name='ps2' value=''>";
+
+	echo "<br><br>Click &nbsp; ";
+	echo "<input type='submit' name='sub' value='update'>";
+
 	}
-	else
-	echo "<br><br>error ";
 
 echo '</div><div id="ft">';
 
@@ -230,5 +228,26 @@ echo '<hr>
 }
 ?>
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
